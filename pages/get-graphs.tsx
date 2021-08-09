@@ -46,6 +46,7 @@ export default function GetGraphs() {
     event: ChangeEvent<HTMLInputElement>,
     key: keyof Form
   ) => {
+    setShouldFetch(false);
     setForm({ ...form, [key]: event.target.value });
   };
 
