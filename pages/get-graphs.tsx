@@ -33,7 +33,11 @@ export default function GetGraphs() {
     token: "",
   });
   const [shouldFetch, setShouldFetch] = useState(false);
-  const { data: graphs } = useSWR(
+  const {
+    isValidating,
+    data: graphs,
+    error,
+  } = useSWR(
     shouldFetch ? ["GET", `/${form.username}/graphs`, form.token] : null,
     fetcher
   );
@@ -65,7 +69,12 @@ export default function GetGraphs() {
           value={form.token}
         />
       </FormControl>
-      <Button type="button" colorScheme="teal" onClick={handleSubmit}>
+      <Button
+        type="button"
+        colorScheme="teal"
+        isLoading={isValidating}
+        onClick={handleSubmit}
+      >
         Submit
       </Button>
       <Code display="block" whiteSpace="pre">
