@@ -8,18 +8,35 @@ import {
   Code,
 } from "@chakra-ui/react";
 import { ChangeEvent, useState } from "react";
+import useSWR from "swr";
 
 type Form = {
   username: string;
   token: string;
 };
 
+const fetcher = (method: string, url: string, token: string) =>
+  fetch(
+    `https://pixe.la/v1/users${url}`,
+
+    {
+      method,
+      headers: {
+        "X-USER-TOKEN": token,
+      },
+    }
+  ).then((res) => res.json());
+
 export default function GetGraphs() {
   const [form, setForm] = useState<Form>({
     username: "",
     token: "",
   });
-  const [response, setResponse] = useState("");
+  const [shouldFetch, setShouldFetch] = useState(false);
+  const { data: graphs } = useSWR(
+    shouldFetch ? ["GET", `/${form.username}/graphs`, form.token] : null,
+    fetcher
+  );
 
   const handleChange = (
     event: ChangeEvent<HTMLInputElement>,
@@ -28,20 +45,8 @@ export default function GetGraphs() {
     setForm({ ...form, [key]: event.target.value });
   };
 
-  const handleSubmit = async () => {
-    const res = await fetch(
-      `https://pixe.la/v1/users/${form.username}/graphs`,
-      {
-        method: "GET",
-        headers: {
-          "X-USER-TOKEN": `${form.token}`,
-        },
-      }
-    );
-
-    const graphs = await res.json();
-    console.log(graphs);
-    setResponse(JSON.stringify(graphs, null, 2));
+  const handleSubmit = () => {
+    setShouldFetch(true);
   };
 
   return (
@@ -64,7 +69,7 @@ export default function GetGraphs() {
         Submit
       </Button>
       <Code display="block" whiteSpace="pre">
-        {response}
+        {JSON.stringify(graphs, null, 2)}
       </Code>
     </>
   );
