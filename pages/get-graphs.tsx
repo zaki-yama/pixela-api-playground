@@ -3,8 +3,8 @@ import {
   Input,
   FormControl,
   FormLabel,
-  FormHelperText,
-  Textarea,
+  Alert,
+  AlertIcon,
   Code,
 } from "@chakra-ui/react";
 import { ChangeEvent, useState } from "react";
@@ -15,8 +15,8 @@ type Form = {
   token: string;
 };
 
-const fetcher = (method: string, url: string, token: string) =>
-  fetch(
+const fetcher = async (method: string, url: string, token: string) => {
+  const res = await fetch(
     `https://pixe.la/v1/users${url}`,
 
     {
@@ -25,7 +25,19 @@ const fetcher = (method: string, url: string, token: string) =>
         "X-USER-TOKEN": token,
       },
     }
-  ).then((res) => res.json());
+  );
+  if (!res.ok) {
+    // TODO: define custom error
+    const error = new Error("API request failed");
+    // @ts-ignore
+    error.info = await res.json();
+    // @ts-ignore
+    error.status = res.status;
+    throw error;
+  }
+
+  return res.json();
+};
 
 export default function GetGraphs() {
   const [form, setForm] = useState<Form>({
@@ -41,6 +53,7 @@ export default function GetGraphs() {
     shouldFetch ? ["GET", `/${form.username}/graphs`, form.token] : null,
     fetcher
   );
+  console.log(error);
 
   const handleChange = (
     event: ChangeEvent<HTMLInputElement>,
@@ -81,6 +94,17 @@ export default function GetGraphs() {
       <Code display="block" whiteSpace="pre">
         {JSON.stringify(graphs, null, 2)}
       </Code>
+      {error && (
+        <>
+          <Alert status="error">
+            <AlertIcon />
+            {error.status}
+          </Alert>
+          <Code colorScheme="red" display="block" whiteSpace="pre">
+            {JSON.stringify(error.info, null, 2)}
+          </Code>
+        </>
+      )}
     </>
   );
 }
