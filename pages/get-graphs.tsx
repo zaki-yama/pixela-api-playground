@@ -10,6 +10,8 @@ import {
 import { ChangeEvent, useState } from "react";
 import useSWR from "swr";
 
+import Layout from "../components/layout";
+
 type Form = {
   username: string;
   token: string;
@@ -68,7 +70,7 @@ export default function GetGraphs() {
   };
 
   return (
-    <>
+    <Layout>
       <FormControl>
         <FormLabel>Username</FormLabel>
         <Input
@@ -105,6 +107,6 @@ export default function GetGraphs() {
           </Code>
         </>
       )}
-    </>
+    </Layout>
   );
 }

@@ -1,0 +1,19 @@
+.container {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  grid-gap: 16px;
+}
+
+.sidebar {
+  align-self: start;
+}
+
+.sidebar > ul > li {
+  height: 30px;
+}
+
+.main {
+  max-width: 36rem;
+  min-width: 36rem;
+  margin: auto;
+}
