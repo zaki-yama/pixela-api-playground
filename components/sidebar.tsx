@@ -37,11 +37,8 @@ export default function Sidebar() {
                   href={route.path}
                   method={route.method}
                 >
+                  <HttpMethodIcon method={route.method} />
                   <span>{route.title}</span>
-                  {/*
-              {lvl3.new && (
-              )}
-              */}
                 </SidebarLink>
               ))}
             </Stack>
