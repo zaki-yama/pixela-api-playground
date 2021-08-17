@@ -1,36 +1,11 @@
-import { chakra, useColorModeValue, Box, Stack } from "@chakra-ui/react";
+import { Box, Stack } from "@chakra-ui/react";
 import SidebarLink from "./sidebar-link";
-import { SidebarCategory } from "./sidebar-category";
+import SidebarCategory from "./sidebar-category";
+import HttpMethodIcon from "./http-method-icon";
 
-function SidebarContent() {
-  return (
-    <>
-      <chakra.h4
-        fontSize="sm"
-        fontWeight="bold"
-        my="1.25rem"
-        textTransform="uppercase"
-        letterSpacing="wider"
-        color={useColorModeValue("gray.700", "inherit")}
-      >
-        User
-      </chakra.h4>
-    </>
-  );
-}
+import routes from "./routes.json";
 
 export default function Sidebar() {
-  const routes = [
-    {
-      title: "GET /graphs",
-      path: "/get-graphs",
-    },
-    {
-      title: "POST /graphs",
-      path: "/post-graphs",
-    },
-  ];
-
   return (
     <Box
       as="nav"
@@ -46,34 +21,33 @@ export default function Sidebar() {
       overflowY="auto"
       flexShrink={0}
     >
-      <SidebarContent />
-      <SidebarCategory
-        // key={lvl2.path + index}
-        title="foo"
-        // selected={selected}
-        // opened={opened}
-      >
-        <Stack as="ul">
-          {routes.map((route) => (
-            <SidebarLink as="li" key={route.path} href={route.path}>
-              <span>{route.title}</span>
-              {/*
-              {lvl3.new && (
-                <Badge
-                  ml="2"
-                  lineHeight="tall"
-                  fontSize="10px"
-                  variant="solid"
-                  colorScheme="purple"
+      {routes.map((category, index) => {
+        return (
+          <SidebarCategory
+            key={category.path}
+            title={category.title}
+            // selected={selected}
+            // opened={opened}
+          >
+            <Stack as="ul">
+              {category.routes.map((route) => (
+                <SidebarLink
+                  as="li"
+                  key={route.path}
+                  href={route.path}
+                  method={route.method}
                 >
-                  New
-                </Badge>
+                  <span>{route.title}</span>
+                  {/*
+              {lvl3.new && (
               )}
               */}
-            </SidebarLink>
-          ))}
-        </Stack>
-      </SidebarCategory>
+                </SidebarLink>
+              ))}
+            </Stack>
+          </SidebarCategory>
+        );
+      })}
     </Box>
   );
 }

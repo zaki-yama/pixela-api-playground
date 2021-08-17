@@ -32,12 +32,12 @@ const StyledLink = React.forwardRef(function StyledLink(
 });
 
 type SidebarLinkProps = PropsOf<typeof chakra.div> & {
-  href?: string;
-  icon?: React.ReactElement;
+  href: string;
+  method: string;
 };
 
-const SidebarLink = (props: SidebarLinkProps) => {
-  const { href, icon, children, ...rest } = props;
+export default function SidebarLink(props: SidebarLinkProps) {
+  const { href, icon, method, children, ...rest } = props;
 
   const { pathname } = useRouter();
   const isActive = pathname === href;
@@ -55,6 +55,4 @@ const SidebarLink = (props: SidebarLinkProps) => {
       </NextLink>
     </chakra.div>
   );
-};
-
-export default SidebarLink;
+}

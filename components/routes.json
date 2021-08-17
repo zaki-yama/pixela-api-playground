@@ -1,0 +1,18 @@
+[
+  {
+    "title": "Graphs",
+    "path": "/graphs",
+    "routes": [
+      {
+        "method": "GET",
+        "title": "/graphs",
+        "path": "/graphs/get-graphs"
+      },
+      {
+        "method": "POST",
+        "title": "/graphs",
+        "path": "/graphs/post-graphs"
+      }
+    ]
+  }
+]

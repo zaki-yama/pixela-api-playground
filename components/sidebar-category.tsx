@@ -6,7 +6,7 @@ type Props = {
   children: ReactNode;
 };
 
-export function SidebarCategory({ title, children }: Props) {
+export default function SidebarCategory({ title, children }: Props) {
   return (
     <chakra.div mt="8">
       <chakra.p
