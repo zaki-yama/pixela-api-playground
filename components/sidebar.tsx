@@ -11,7 +11,7 @@ export default function Sidebar() {
       as="nav"
       aria-label="Main Navigation"
       pos="sticky"
-      top="6.5rem"
+      top="4.5rem"
       w="280px"
       h="calc(100vh - 8.125rem)"
       pr="8"

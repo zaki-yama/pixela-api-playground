@@ -8,7 +8,7 @@ type Props = {
 
 export default function SidebarCategory({ title, children }: Props) {
   return (
-    <chakra.div mt="8">
+    <chakra.div>
       <chakra.p
         width="full"
         textTransform="uppercase"
