@@ -1,4 +1,5 @@
 import {
+  Heading,
   Button,
   Input,
   FormControl,
@@ -7,6 +8,7 @@ import {
   AlertIcon,
   Code,
   Stack,
+  chakra,
 } from "@chakra-ui/react";
 import { ChangeEvent, useState } from "react";
 import useSWR from "swr";
@@ -72,6 +74,17 @@ export default function GetGraphs() {
 
   return (
     <Layout>
+      <Heading as="h1" size="lg">
+        GET - /v1/users/&lt;username&gt;/graphs
+      </Heading>
+
+      <chakra.p py="4">
+        Get all predefined pixelation graph definitions.
+      </chakra.p>
+
+      <Heading size="md" py="4">
+        Request parameters
+      </Heading>
       <Stack spacing={4}>
         <FormControl>
           <FormLabel>Username</FormLabel>

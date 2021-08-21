@@ -23,7 +23,9 @@ export default function Layout({ children }: Props) {
         <Box display={{ md: "flex" }}>
           <Sidebar />
           <Box flex="1" minW="0">
-            <main className={styles.main}>{children}</main>
+            <Box as="main" className={styles.main} pt="12">
+              {children}
+            </Box>
           </Box>
         </Box>
       </Box>
