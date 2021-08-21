@@ -6,6 +6,7 @@ import {
   Alert,
   AlertIcon,
   Code,
+  Stack,
 } from "@chakra-ui/react";
 import { ChangeEvent, useState } from "react";
 import useSWR from "swr";
@@ -71,42 +72,46 @@ export default function GetGraphs() {
 
   return (
     <Layout>
-      <FormControl>
-        <FormLabel>Username</FormLabel>
-        <Input
-          type="text"
-          onChange={(e) => handleChange(e, "username")}
-          value={form.username}
-        />
-        <FormLabel>Token</FormLabel>
-        <Input
-          type="text"
-          onChange={(e) => handleChange(e, "token")}
-          value={form.token}
-        />
-      </FormControl>
-      <Button
-        type="button"
-        colorScheme="teal"
-        isLoading={isValidating}
-        onClick={handleSubmit}
-      >
-        Submit
-      </Button>
-      <Code display="block" whiteSpace="pre">
-        {JSON.stringify(graphs, null, 2)}
-      </Code>
-      {error && (
-        <>
-          <Alert status="error">
-            <AlertIcon />
-            {error.status}
-          </Alert>
-          <Code colorScheme="red" display="block" whiteSpace="pre">
-            {JSON.stringify(error.info, null, 2)}
-          </Code>
-        </>
-      )}
+      <Stack spacing={4}>
+        <FormControl>
+          <FormLabel>Username</FormLabel>
+          <Input
+            type="text"
+            onChange={(e) => handleChange(e, "username")}
+            value={form.username}
+          />
+        </FormControl>
+        <FormControl>
+          <FormLabel>Token</FormLabel>
+          <Input
+            type="text"
+            onChange={(e) => handleChange(e, "token")}
+            value={form.token}
+          />
+        </FormControl>
+        <Button
+          type="button"
+          colorScheme="teal"
+          isLoading={isValidating}
+          onClick={handleSubmit}
+        >
+          Submit
+        </Button>
+        <Code display="block" whiteSpace="pre">
+          {JSON.stringify(graphs, null, 2)}
+        </Code>
+        {error && (
+          <>
+            <Alert status="error">
+              <AlertIcon />
+              {error.status}
+            </Alert>
+            <Code colorScheme="red" display="block" whiteSpace="pre">
+              {JSON.stringify(error.info, null, 2)}
+            </Code>
+          </>
+        )}
+      </Stack>
     </Layout>
   );
 }

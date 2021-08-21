@@ -12,7 +12,14 @@ export default function Layout({ children }: Props) {
   return (
     <>
       <Header />
-      <Box as="main" className="main-content" w="full" maxW="8xl" mx="auto">
+      <Box
+        as="main"
+        className="main-content"
+        w="full"
+        maxW="8xl"
+        mx="auto"
+        px="12"
+      >
         <Box display={{ md: "flex" }}>
           <Sidebar />
           <Box flex="1" minW="0">
