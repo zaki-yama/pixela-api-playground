@@ -6,12 +6,12 @@
       {
         "method": "GET",
         "title": "/graphs",
-        "path": "/graphs/get-graphs"
+        "path": "/graphs/get-graph"
       },
       {
         "method": "POST",
         "title": "/graphs",
-        "path": "/graphs/post-graphs"
+        "path": "/graphs/post-graph"
       }
     ]
   }

@@ -11,7 +11,7 @@ import {
 import { ChangeEvent, useState } from "react";
 import useSWR from "swr";
 
-import Layout from "../components/layout";
+import Layout from "../../components/layout";
 
 type Form = {
   username: string;
