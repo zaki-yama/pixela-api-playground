@@ -68,7 +68,7 @@ export default function GetGraphs() {
     setForm({ ...form, [key]: event.target.value });
   };
 
-  const handleSubmit = () => {
+  const handleExecute = () => {
     setShouldFetch(true);
   };
 
@@ -106,9 +106,9 @@ export default function GetGraphs() {
           type="button"
           colorScheme="teal"
           isLoading={isValidating}
-          onClick={handleSubmit}
+          onClick={handleExecute}
         >
-          Submit
+          Execute
         </Button>
         <Code display="block" whiteSpace="pre">
           {JSON.stringify(graphs, null, 2)}
