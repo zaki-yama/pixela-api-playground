@@ -12,7 +12,8 @@ const COLOR_SCHEMES = {
 };
 
 export default function HttpMethodIcon({ method }: Props) {
-  const colorScheme = COLOR_SCHEMES[method] || "gray";
+  const colorScheme =
+    COLOR_SCHEMES[method as keyof typeof COLOR_SCHEMES] || "gray";
   return (
     <Badge
       mr="2"
