@@ -12,6 +12,11 @@
         "method": "POST",
         "title": "/graphs",
         "path": "/graphs/post-graph"
+      },
+      {
+        "method": "DELETE",
+        "title": "/graphs/<graphID>",
+        "path": "/graphs/delete-graph"
       }
     ]
   }
