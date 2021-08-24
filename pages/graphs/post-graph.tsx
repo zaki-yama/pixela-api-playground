@@ -14,7 +14,6 @@ import {
   chakra,
 } from "@chakra-ui/react";
 import { ChangeEvent, useState } from "react";
-import useSWR from "swr";
 
 import Layout from "../../components/layout";
 
@@ -33,17 +32,16 @@ type Form = {
   publishOptionalData?: boolean;
 };
 
-const fetcher = async (
-  method: string,
-  url: string,
+const postGraph = async (
+  username: string,
   token: string,
-  body: object
+  body: Record<string, any>
 ) => {
   const res = await fetch(
-    `https://pixe.la/v1/users${url}`,
+    `https://pixe.la/v1/users/${username}/graphs`,
 
     {
-      method,
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
         "X-USER-TOKEN": token,
@@ -74,33 +72,33 @@ export default function PostGraph() {
     type: "int",
     color: "shibafu",
   });
-  const { username, token, ...body } = form;
-  const [shouldFetch, setShouldFetch] = useState(false);
-  const {
-    isValidating,
-    data: graphs,
-    error,
-  } = useSWR(
-    shouldFetch ? ["POST", `/${form.username}/graphs`, form.token, form] : null,
-    fetcher
-  );
-  console.log(error);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [response, setResponse] = useState(null);
+  const [error, setError] = useState<any>(null);
 
   const handleChange = (
     event: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
     key: keyof Form
   ) => {
-    setShouldFetch(false);
     setForm({ ...form, [key]: event.target.value });
   };
 
   const handleRadioChange = (value: String, key: keyof Form) => {
-    setShouldFetch(false);
     setForm({ ...form, [key]: value });
   };
 
-  const handleExecute = () => {
-    setShouldFetch(true);
+  const handleExecute = async () => {
+    setIsLoading(true);
+    const { username, token, ...body } = form;
+    try {
+      const response = await postGraph(username, token, body);
+      console.log(response);
+      setResponse(response);
+    } catch (error) {
+      setError(error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -181,14 +179,16 @@ export default function PostGraph() {
         <Button
           type="button"
           colorScheme="teal"
-          isLoading={isValidating}
+          isLoading={isLoading}
           onClick={handleExecute}
         >
           Execute
         </Button>
-        <Code display="block" whiteSpace="pre">
-          {JSON.stringify(graphs, null, 2)}
-        </Code>
+        {response && (
+          <Code display="block" whiteSpace="pre">
+            {JSON.stringify(response, null, 2)}
+          </Code>
+        )}
         {error && (
           <>
             <Alert status="error">
