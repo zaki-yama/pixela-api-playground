@@ -17,6 +17,11 @@
         "method": "DELETE",
         "title": "/graphs/<graphID>",
         "path": "/graphs/delete-graph"
+      },
+      {
+        "method": "GET",
+        "title": "/graphs/<graphID>",
+        "path": "/graphs/get-svg"
       }
     ]
   }
