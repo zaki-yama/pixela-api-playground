@@ -87,7 +87,7 @@ export default function GetGraphs() {
       </Heading>
       <Stack spacing={4}>
         <FormControl>
-          <FormLabel>Username</FormLabel>
+          <FormLabel>username</FormLabel>
           <Input
             type="text"
             onChange={(e) => handleChange(e, "username")}
@@ -95,7 +95,7 @@ export default function GetGraphs() {
           />
         </FormControl>
         <FormControl>
-          <FormLabel>Token</FormLabel>
+          <FormLabel>token</FormLabel>
           <Input
             type="text"
             onChange={(e) => handleChange(e, "token")}
