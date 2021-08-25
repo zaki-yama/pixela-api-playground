@@ -11,7 +11,7 @@ import {
   chakra,
   FormErrorMessage,
 } from "@chakra-ui/react";
-import { ChangeEvent, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import useSWR from "swr";
 
