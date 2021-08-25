@@ -9,13 +9,15 @@ import {
   Code,
   Stack,
   chakra,
+  FormErrorMessage,
 } from "@chakra-ui/react";
 import { ChangeEvent, useState } from "react";
+import { useForm } from "react-hook-form";
 import useSWR from "swr";
 
 import Layout from "../../components/layout";
 
-type Form = {
+type FormData = {
   username: string;
   token: string;
 };
@@ -45,7 +47,13 @@ const fetcher = async (method: string, url: string, token: string) => {
 };
 
 export default function GetGraphs() {
-  const [form, setForm] = useState<Form>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<FormData>();
+
+  const [form, setForm] = useState<FormData>({
     username: "",
     token: "",
   });
@@ -62,16 +70,17 @@ export default function GetGraphs() {
 
   const handleChange = (
     event: ChangeEvent<HTMLInputElement>,
-    key: keyof Form
+    key: keyof FormData
   ) => {
     setShouldFetch(false);
     setForm({ ...form, [key]: event.target.value });
   };
 
-  const handleExecute = () => {
+  const onSubmit = () => {
     setShouldFetch(true);
   };
 
+  console.log(errors);
   return (
     <Layout>
       <Heading as="h1" size="lg">
@@ -85,46 +94,48 @@ export default function GetGraphs() {
       <Heading size="md" py="4">
         Request parameters
       </Heading>
-      <Stack spacing={4}>
-        <FormControl>
-          <FormLabel>username</FormLabel>
-          <Input
-            type="text"
-            onChange={(e) => handleChange(e, "username")}
-            value={form.username}
-          />
-        </FormControl>
-        <FormControl>
-          <FormLabel>token</FormLabel>
-          <Input
-            type="text"
-            onChange={(e) => handleChange(e, "token")}
-            value={form.token}
-          />
-        </FormControl>
-        <Button
-          type="button"
-          colorScheme="teal"
-          isLoading={isValidating}
-          onClick={handleExecute}
-        >
-          Execute
-        </Button>
-        <Code display="block" whiteSpace="pre">
-          {JSON.stringify(graphs, null, 2)}
-        </Code>
-        {error && (
-          <>
-            <Alert status="error">
-              <AlertIcon />
-              {error.status}
-            </Alert>
-            <Code colorScheme="red" display="block" whiteSpace="pre">
-              {JSON.stringify(error.info, null, 2)}
-            </Code>
-          </>
-        )}
-      </Stack>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Stack spacing={4}>
+          <FormControl isInvalid={!!errors.username}>
+            <FormLabel htmlFor="username">username</FormLabel>
+            <Input
+              id="username"
+              type="text"
+              {...register("username", {
+                required: "This is required.",
+              })}
+            />
+            <FormErrorMessage>
+              {errors.username && errors.username.message}
+            </FormErrorMessage>
+          </FormControl>
+          <FormControl>
+            <FormLabel>token</FormLabel>
+            <Input
+              type="text"
+              onChange={(e) => handleChange(e, "token")}
+              value={form.token}
+            />
+          </FormControl>
+          <Button type="submit" colorScheme="teal" isLoading={isSubmitting}>
+            Execute
+          </Button>
+        </Stack>
+      </form>
+      <Code display="block" whiteSpace="pre">
+        {JSON.stringify(graphs, null, 2)}
+      </Code>
+      {error && (
+        <>
+          <Alert status="error">
+            <AlertIcon />
+            {error.status}
+          </Alert>
+          <Code colorScheme="red" display="block" whiteSpace="pre">
+            {JSON.stringify(error.info, null, 2)}
+          </Code>
+        </>
+      )}
     </Layout>
   );
 }
