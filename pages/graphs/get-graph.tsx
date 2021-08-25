@@ -118,6 +118,9 @@ export default function GetGraphs() {
           </Button>
         </Stack>
       </form>
+      <Heading size="md" pt="12" pb="4">
+        Response
+      </Heading>
       <Code display="block" whiteSpace="pre">
         {JSON.stringify(graphs, null, 2)}
       </Code>
