@@ -49,32 +49,23 @@ const fetcher = async (method: string, url: string, token: string) => {
 export default function GetGraphs() {
   const {
     register,
+    getValues,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<FormData>();
 
-  const [form, setForm] = useState<FormData>({
-    username: "",
-    token: "",
-  });
   const [shouldFetch, setShouldFetch] = useState(false);
   const {
     isValidating,
     data: graphs,
     error,
   } = useSWR(
-    shouldFetch ? ["GET", `/${form.username}/graphs`, form.token] : null,
+    shouldFetch
+      ? ["GET", `/${getValues().username}/graphs`, getValues().token]
+      : null,
     fetcher
   );
   console.log(error);
-
-  const handleChange = (
-    event: ChangeEvent<HTMLInputElement>,
-    key: keyof FormData
-  ) => {
-    setShouldFetch(false);
-    setForm({ ...form, [key]: event.target.value });
-  };
 
   const onSubmit = () => {
     setShouldFetch(true);
@@ -109,15 +100,20 @@ export default function GetGraphs() {
               {errors.username && errors.username.message}
             </FormErrorMessage>
           </FormControl>
-          <FormControl>
-            <FormLabel>token</FormLabel>
+          <FormControl isInvalid={!!errors.token}>
+            <FormLabel htmlFor="token">token</FormLabel>
             <Input
+              id="token"
               type="text"
-              onChange={(e) => handleChange(e, "token")}
-              value={form.token}
+              {...register("token", {
+                required: "This is required.",
+              })}
             />
+            <FormErrorMessage>
+              {errors.token && errors.token.message}
+            </FormErrorMessage>
           </FormControl>
-          <Button type="submit" colorScheme="teal" isLoading={isSubmitting}>
+          <Button type="submit" colorScheme="teal" isLoading={isValidating}>
             Execute
           </Button>
         </Stack>
