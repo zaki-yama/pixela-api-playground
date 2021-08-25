@@ -19,6 +19,7 @@ export default function Layout({ children }: Props) {
         maxW="8xl"
         mx="auto"
         px="12"
+        pb="24"
       >
         <Box display={{ md: "flex" }}>
           <Sidebar />
