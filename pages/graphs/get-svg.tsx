@@ -50,7 +50,7 @@ const fetcher = async (method: string, url: string, token: string) => {
   return res.text();
 };
 
-export default function GetGraphs() {
+export default function GetSvg() {
   const [form, setForm] = useState<Form>({
     username: "",
     token: "",
