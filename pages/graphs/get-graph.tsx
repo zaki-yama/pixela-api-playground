@@ -51,7 +51,7 @@ export default function GetGraphs() {
     register,
     getValues,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<FormData>();
 
   const [shouldFetch, setShouldFetch] = useState(false);
@@ -65,7 +65,6 @@ export default function GetGraphs() {
       : null,
     fetcher
   );
-  console.log(error);
 
   const onSubmit = () => {
     setShouldFetch(true);
