@@ -2,9 +2,6 @@ import {
   Heading,
   Button,
   Box,
-  FormControl,
-  FormLabel,
-  FormErrorMessage,
   Alert,
   AlertIcon,
   Code,
@@ -13,7 +10,7 @@ import {
 } from "@chakra-ui/react";
 import Input from "../../components/forms/input";
 import { useForm } from "react-hook-form";
-import { ChangeEvent, useState } from "react";
+import { useState } from "react";
 import useSWR from "swr";
 
 import Layout from "../../components/layout";
