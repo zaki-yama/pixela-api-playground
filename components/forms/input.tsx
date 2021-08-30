@@ -21,7 +21,8 @@ export default function Input<TFieldValues>({
 }: Props<TFieldValues>) {
   return (
     <FormControl isInvalid={!!errors[name]}>
-      <FormLabel htmlFor="username">username</FormLabel>
+      {/* @ts-ignore */}
+      <FormLabel htmlFor={name}>{name}</FormLabel>
       <ChakraUIInput
         // @ts-ignore
         id={name}
