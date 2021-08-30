@@ -23,15 +23,23 @@ type Form = {
   appearance?: "dark";
 };
 
-const fetcher = async (method: string, url: string, token: string) => {
+const fetcher = async (
+  method: string,
+  url: string,
+  date?: string,
+  mode?: string,
+  apperance?: string
+) => {
+  const queryParams = new URLSearchParams();
+  if (date) queryParams.set("date", date);
+  if (mode) queryParams.set("mode", mode);
+  if (apperance) queryParams.set("appearance", apperance);
+
   const res = await fetch(
-    `https://pixe.la/v1/users${url}`,
+    `https://pixe.la/v1/users${url}?${queryParams.toString()}`,
 
     {
       method,
-      headers: {
-        "X-USER-TOKEN": token,
-      },
     }
   );
   if (!res.ok) {
@@ -66,7 +74,13 @@ export default function GetSvg() {
     error,
   } = useSWR(
     shouldFetch
-      ? ["GET", `/${getValues().username}/graphs/${getValues().graphId}`]
+      ? [
+          "GET",
+          `/${getValues().username}/graphs/${getValues().graphId}`,
+          getValues().date,
+          getValues().mode,
+          getValues().appearance,
+        ]
       : null,
     fetcher
   );
@@ -104,6 +118,9 @@ export default function GetSvg() {
             register={register}
             errors={errors}
           ></Input>
+          <Input name="date" register={register} errors={errors}></Input>
+          <Input name="mode" register={register} errors={errors}></Input>
+          <Input name="appearance" register={register} errors={errors}></Input>
           <Button type="submit" colorScheme="teal" isLoading={isValidating}>
             Execute
           </Button>
