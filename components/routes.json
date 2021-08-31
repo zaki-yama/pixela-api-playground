@@ -28,6 +28,11 @@
         "method": "GET",
         "title": "/@<username>",
         "path": "/user-profile/get-profile"
+      },
+      {
+        "method": "PUT",
+        "title": "/@<username>",
+        "path": "/user-profile/put-profile"
       }
     ]
   },
