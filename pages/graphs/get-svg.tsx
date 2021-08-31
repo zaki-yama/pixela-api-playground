@@ -2,39 +2,49 @@ import {
   Heading,
   Button,
   Box,
-  Input,
+  Select,
+  Checkbox,
   FormControl,
   FormLabel,
+  FormErrorMessage,
   Alert,
   AlertIcon,
   Code,
   Stack,
   chakra,
 } from "@chakra-ui/react";
-import { ChangeEvent, useState } from "react";
+import Input from "../../components/forms/input";
+import { useForm } from "react-hook-form";
+import { useState } from "react";
 import useSWR from "swr";
 
 import Layout from "../../components/layout";
 
 type Form = {
   username: string;
-  token: string;
-
   graphId: string;
   date?: string;
   mode?: "short" | "badge" | "line";
   appearance?: "dark";
 };
 
-const fetcher = async (method: string, url: string, token: string) => {
+const fetcher = async (
+  method: string,
+  url: string,
+  date?: string,
+  mode?: string,
+  apperance?: string
+) => {
+  const queryParams = new URLSearchParams();
+  if (date) queryParams.set("date", date);
+  if (mode) queryParams.set("mode", mode);
+  if (apperance) queryParams.set("appearance", apperance);
+
   const res = await fetch(
-    `https://pixe.la/v1/users${url}`,
+    `https://pixe.la/v1/users${url}?${queryParams.toString()}`,
 
     {
       method,
-      headers: {
-        "X-USER-TOKEN": token,
-      },
     }
   );
   if (!res.ok) {
@@ -50,12 +60,18 @@ const fetcher = async (method: string, url: string, token: string) => {
   return res.text();
 };
 
-export default function GetGraphs() {
-  const [form, setForm] = useState<Form>({
-    username: "",
-    token: "",
-    graphId: "",
-  });
+const DEFAULT_VALUES = {
+  username: "",
+  graphId: "",
+};
+
+export default function GetSvg() {
+  const {
+    register,
+    handleSubmit,
+    getValues,
+    formState: { errors },
+  } = useForm<Form>({ defaultValues: DEFAULT_VALUES });
   const [shouldFetch, setShouldFetch] = useState(false);
   const {
     isValidating,
@@ -63,21 +79,19 @@ export default function GetGraphs() {
     error,
   } = useSWR(
     shouldFetch
-      ? ["GET", `/${form.username}/graphs/${form.graphId}`, form.token]
+      ? [
+          "GET",
+          `/${getValues().username}/graphs/${getValues().graphId}`,
+          getValues().date,
+          getValues().mode,
+          getValues().appearance,
+        ]
       : null,
     fetcher
   );
   console.log(error);
 
-  const handleChange = (
-    event: ChangeEvent<HTMLInputElement>,
-    key: keyof Form
-  ) => {
-    setShouldFetch(false);
-    setForm({ ...form, [key]: event.target.value });
-  };
-
-  const handleExecute = () => {
+  const onSubmit = () => {
     setShouldFetch(true);
   };
 
@@ -95,40 +109,46 @@ export default function GetGraphs() {
       <Heading size="md" py="4">
         Request parameters
       </Heading>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Stack spacing={4}>
+          <Input
+            name="username"
+            required
+            register={register}
+            errors={errors}
+          ></Input>
+          <Input
+            name="graphId"
+            required
+            register={register}
+            errors={errors}
+          ></Input>
+          <Input name="date" register={register} errors={errors}></Input>
+          <FormControl>
+            <FormLabel htmlFor="mode">mode</FormLabel>
+            <Select {...register("mode")}>
+              <option value=""></option>
+              <option value="short">short</option>
+              <option value="badge">badge</option>
+              <option value="line">line</option>
+            </Select>
+          </FormControl>
+          <FormControl>
+            <FormLabel htmlFor="appearance">appearance</FormLabel>
+            <Checkbox {...register("appearance")} value="dark">
+              dark
+            </Checkbox>
+          </FormControl>
+          <Button type="submit" colorScheme="teal" isLoading={isValidating}>
+            Execute
+          </Button>
+        </Stack>
+      </form>
+      <Heading size="md" pt="12" pb="4">
+        Response
+      </Heading>
       <Stack spacing={4}>
-        <FormControl>
-          <FormLabel>username</FormLabel>
-          <Input
-            type="text"
-            onChange={(e) => handleChange(e, "username")}
-            value={form.username}
-          />
-        </FormControl>
-        <FormControl>
-          <FormLabel>token</FormLabel>
-          <Input
-            type="text"
-            onChange={(e) => handleChange(e, "token")}
-            value={form.token}
-          />
-        </FormControl>
-        <FormControl>
-          <FormLabel>graphId</FormLabel>
-          <Input
-            type="text"
-            onChange={(e) => handleChange(e, "graphId")}
-            value={form.graphId}
-          />
-        </FormControl>
-        <Button
-          type="button"
-          colorScheme="teal"
-          isLoading={isValidating}
-          onClick={handleExecute}
-        >
-          Execute
-        </Button>
-        {svg && <Box py={12} dangerouslySetInnerHTML={{ __html: svg }}></Box>}
+        {svg && <Box py={8} dangerouslySetInnerHTML={{ __html: svg }}></Box>}
         {error && (
           <>
             <Alert status="error">

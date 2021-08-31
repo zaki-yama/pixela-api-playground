@@ -9,13 +9,14 @@ import {
   Code,
   Stack,
   chakra,
+  FormErrorMessage,
 } from "@chakra-ui/react";
 import { ChangeEvent, useState } from "react";
-import useSWR from "swr";
+import { useForm } from "react-hook-form";
 
 import Layout from "../../components/layout";
 
-type Form = {
+type FormData = {
   username: string;
   token: string;
   graphId: string;
@@ -49,34 +50,34 @@ const deleteGraph = async (
   return res.json();
 };
 
+const DEFAULT_VALUES = {
+  username: "",
+  token: "",
+  graphId: "",
+};
+
 export default function DeleteGraph() {
-  const [form, setForm] = useState<Form>({
-    username: "",
-    token: "",
-    graphId: "",
+  const {
+    register,
+    handleSubmit,
+    getValues,
+    formState: { errors, isSubmitting },
+  } = useForm<FormData>({
+    defaultValues: DEFAULT_VALUES,
   });
-  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [response, setResponse] = useState(null);
   const [error, setError] = useState<any>(null);
 
-  const handleChange = (
-    event: ChangeEvent<HTMLInputElement>,
-    key: keyof Form
-  ) => {
-    setForm({ ...form, [key]: event.target.value });
-  };
-
-  const handleExecute = async () => {
-    setIsLoading(true);
-    const { username, token, graphId } = form;
+  const onSubmit = async () => {
+    const { username, token, graphId } = getValues();
     try {
       const response = await deleteGraph(username, token, graphId);
       console.log(response);
       setResponse(response);
+      setError(null);
     } catch (error) {
+      setResponse(null);
       setError(error);
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -91,39 +92,53 @@ export default function DeleteGraph() {
       <Heading size="md" py="4">
         Request parameters
       </Heading>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Stack spacing={4}>
+          <FormControl isInvalid={!!errors.username}>
+            <FormLabel htmlFor="username">username</FormLabel>
+            <Input
+              type="text"
+              {...register("username", {
+                required: "This is required.",
+              })}
+            />
+            <FormErrorMessage>
+              {errors.username && errors.username.message}
+            </FormErrorMessage>
+          </FormControl>
+          <FormControl isInvalid={!!errors.token}>
+            <FormLabel htmlFor="token">token</FormLabel>
+            <Input
+              type="text"
+              {...register("token", {
+                required: "This is required.",
+              })}
+            />
+            <FormErrorMessage>
+              {errors.token && errors.token.message}
+            </FormErrorMessage>
+          </FormControl>
+          <FormControl isInvalid={!!errors.graphId}>
+            <FormLabel>graphId</FormLabel>
+            <Input
+              type="text"
+              {...register("graphId", {
+                required: "This is required.",
+              })}
+            />
+            <FormErrorMessage>
+              {errors.graphId && errors.graphId.message}
+            </FormErrorMessage>
+          </FormControl>
+          <Button type="submit" colorScheme="teal" isLoading={isSubmitting}>
+            Execute
+          </Button>
+        </Stack>
+      </form>
       <Stack spacing={4}>
-        <FormControl>
-          <FormLabel>username</FormLabel>
-          <Input
-            type="text"
-            onChange={(e) => handleChange(e, "username")}
-            value={form.username}
-          />
-        </FormControl>
-        <FormControl>
-          <FormLabel>token</FormLabel>
-          <Input
-            type="text"
-            onChange={(e) => handleChange(e, "token")}
-            value={form.token}
-          />
-        </FormControl>
-        <FormControl>
-          <FormLabel>graphId</FormLabel>
-          <Input
-            type="text"
-            onChange={(e) => handleChange(e, "graphId")}
-            value={form.graphId}
-          />
-        </FormControl>
-        <Button
-          type="button"
-          colorScheme="teal"
-          isLoading={isLoading}
-          onClick={handleExecute}
-        >
-          Execute
-        </Button>
+        <Heading size="md" pt="12" pb="4">
+          Response
+        </Heading>
         {response && (
           <Code display="block" whiteSpace="pre">
             {JSON.stringify(response, null, 2)}
