@@ -20,6 +20,7 @@ export default function SidebarCategory({ title, children }: Props) {
         justifyContent="space-between"
         userSelect="none"
         color={useColorModeValue("gray.500", "inherit")}
+        pt="8"
         // onClick={onClick}
       >
         {title}

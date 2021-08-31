@@ -1,5 +1,16 @@
 [
   {
+    "title": "Users",
+    "path": "/users",
+    "routes": [
+      {
+        "method": "POST",
+        "title": "/users",
+        "path": "/users/post-user"
+      }
+    ]
+  },
+  {
     "title": "Graphs",
     "path": "/graphs",
     "routes": [
