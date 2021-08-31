@@ -21,6 +21,17 @@
     ]
   },
   {
+    "title": "User Profile",
+    "path": "/user-profile",
+    "routes": [
+      {
+        "method": "GET",
+        "title": "/@<username>",
+        "path": "/user-profile/get-profile"
+      }
+    ]
+  },
+  {
     "title": "Graphs",
     "path": "/graphs",
     "routes": [
