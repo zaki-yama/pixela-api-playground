@@ -12,6 +12,11 @@
         "method": "PUT",
         "title": "/users/<username>",
         "path": "/users/put-user"
+      },
+      {
+        "method": "DELETE",
+        "title": "/users/<username>",
+        "path": "/users/delete-user"
       }
     ]
   },
