@@ -2,6 +2,11 @@ import {
   Heading,
   Button,
   Box,
+  Select,
+  Checkbox,
+  FormControl,
+  FormLabel,
+  FormErrorMessage,
   Alert,
   AlertIcon,
   Code,
@@ -119,8 +124,21 @@ export default function GetSvg() {
             errors={errors}
           ></Input>
           <Input name="date" register={register} errors={errors}></Input>
-          <Input name="mode" register={register} errors={errors}></Input>
-          <Input name="appearance" register={register} errors={errors}></Input>
+          <FormControl>
+            <FormLabel htmlFor="mode">mode</FormLabel>
+            <Select {...register("mode")}>
+              <option value=""></option>
+              <option value="short">short</option>
+              <option value="badge">badge</option>
+              <option value="line">line</option>
+            </Select>
+          </FormControl>
+          <FormControl>
+            <FormLabel htmlFor="appearance">appearance</FormLabel>
+            <Checkbox {...register("appearance")} value="dark">
+              dark
+            </Checkbox>
+          </FormControl>
           <Button type="submit" colorScheme="teal" isLoading={isValidating}>
             Execute
           </Button>
