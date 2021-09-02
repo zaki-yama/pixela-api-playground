@@ -84,6 +84,11 @@
         "method": "GET",
         "title": "/graphs/<graphID>/stats",
         "path": "/graphs/get-graph-stats"
+      },
+      {
+        "method": "POST",
+        "title": "/graphs/<graphID>/stopwatch",
+        "path": "/graphs/post-stopwatch"
       }
     ]
   }
