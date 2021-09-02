@@ -97,6 +97,11 @@
     "path": "/pixel",
     "routes": [
       {
+        "method": "GET",
+        "title": "/graphs/<graphID>",
+        "path": "/pixel/get-pixel"
+      },
+      {
         "method": "POST",
         "title": "/graphs/<graphID>",
         "path": "/pixel/post-pixel"
