@@ -105,6 +105,11 @@
         "method": "POST",
         "title": "/graphs/<graphID>",
         "path": "/pixel/post-pixel"
+      },
+      {
+        "method": "PUT",
+        "title": "/graphs/<graphID>",
+        "path": "/pixel/put-pixel"
       }
     ]
   }
