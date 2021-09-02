@@ -127,5 +127,16 @@
         "path": "/pixel/decrement-pixel"
       }
     ]
+  },
+  {
+    "title": "Retina",
+    "path": "/retina",
+    "routes": [
+      {
+        "method": "GET",
+        "title": "/graphs/<graphID>/<yyyyMMdd>/retina",
+        "path": "/retina/get-retina"
+      }
+    ]
   }
 ]
