@@ -16,6 +16,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 import Layout from "../../components/layout";
+import Date from "../../components/forms/date";
 
 type FormData = {
   username: string;
@@ -60,7 +61,6 @@ const postPixel = async (
 export default function PostPixel() {
   const {
     register,
-    control,
     handleSubmit,
     getValues,
     formState: { errors, isSubmitting },
@@ -107,18 +107,7 @@ export default function PostPixel() {
           <Input name="username" required register={register} errors={errors} />
           <Input name="token" required register={register} errors={errors} />
           <Input name="graphId" required register={register} errors={errors} />
-          <FormControl isInvalid={!!errors.date}>
-            <FormLabel htmlFor="date">date</FormLabel>
-            <ChakraUIInput
-              id="date"
-              type="date"
-              {...register("date", {
-                required: "This is required.",
-                setValueAs: (value) => value.replaceAll("-", ""),
-              })}
-            />
-            <FormErrorMessage>{errors.date?.message}</FormErrorMessage>
-          </FormControl>
+          <Date name="date" required register={register} errors={errors} />
           <Input name="quantity" required register={register} errors={errors} />
           <Input name="optionalData" register={register} errors={errors} />
           <Button type="submit" colorScheme="teal" isLoading={isSubmitting}>
