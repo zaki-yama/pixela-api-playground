@@ -115,6 +115,11 @@
         "method": "PUT",
         "title": "/graphs/<graphID>/increment",
         "path": "/pixel/increment-pixel"
+      },
+      {
+        "method": "PUT",
+        "title": "/graphs/<graphID>/decrement",
+        "path": "/pixel/decrement-pixel"
       }
     ]
   }
