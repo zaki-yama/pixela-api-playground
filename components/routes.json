@@ -69,6 +69,11 @@
         "method": "GET",
         "title": "/graphs/<graphID>/graph-def",
         "path": "/graphs/get-graph-def"
+      },
+      {
+        "method": "GET",
+        "title": "/graphs/<graphID>.html",
+        "path": "/graphs/get-graph-html"
       }
     ]
   }
