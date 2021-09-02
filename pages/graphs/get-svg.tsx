@@ -33,12 +33,12 @@ const fetcher = async (
   url: string,
   date?: string,
   mode?: string,
-  apperance?: string
+  appearance?: string
 ) => {
   const queryParams = new URLSearchParams();
   if (date) queryParams.set("date", date);
   if (mode) queryParams.set("mode", mode);
-  if (apperance) queryParams.set("appearance", apperance);
+  if (appearance) queryParams.set("appearance", appearance);
 
   const res = await fetch(
     `https://pixe.la/v1/users${url}?${queryParams.toString()}`,
