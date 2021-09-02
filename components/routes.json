@@ -74,6 +74,11 @@
         "method": "GET",
         "title": "/graphs/<graphID>.html",
         "path": "/graphs/get-graph-html"
+      },
+      {
+        "method": "GET",
+        "title": "/graphs/<graphID>/pixels",
+        "path": "/graphs/get-graph-pixels"
       }
     ]
   }
