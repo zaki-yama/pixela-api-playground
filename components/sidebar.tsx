@@ -12,7 +12,7 @@ export default function Sidebar() {
       aria-label="Main Navigation"
       pos="sticky"
       top="4.5rem"
-      w="280px"
+      w="340px"
       h="calc(100vh - 8.125rem)"
       pr="8"
       pb="6"
