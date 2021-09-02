@@ -25,7 +25,11 @@ type FormData = {
   graphId: string;
 };
 
-const postGraph = async (username: string, token: string, graphId: string) => {
+const postStopwatch = async (
+  username: string,
+  token: string,
+  graphId: string
+) => {
   const res = await fetch(
     `https://pixe.la/v1/users/${username}/graphs/${graphId}/stopwatch`,
 
@@ -50,7 +54,7 @@ const postGraph = async (username: string, token: string, graphId: string) => {
   return res.json();
 };
 
-export default function PostGraph() {
+export default function PostStopwatch() {
   const {
     register,
     handleSubmit,
@@ -69,7 +73,7 @@ export default function PostGraph() {
   const onSubmit = async () => {
     const { username, token, graphId } = getValues();
     try {
-      const response = await postGraph(username, token, graphId);
+      const response = await postStopwatch(username, token, graphId);
       console.log(response);
       setResponse(response);
       setError(null);
