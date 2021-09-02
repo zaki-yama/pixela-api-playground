@@ -91,5 +91,16 @@
         "path": "/graphs/post-stopwatch"
       }
     ]
+  },
+  {
+    "title": "Pixel",
+    "path": "/pixel",
+    "routes": [
+      {
+        "method": "POST",
+        "title": "/graphs/<graphID>",
+        "path": "/pixel/post-pixel"
+      }
+    ]
   }
 ]
