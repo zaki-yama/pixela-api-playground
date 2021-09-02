@@ -51,14 +51,19 @@
         "path": "/graphs/post-graph"
       },
       {
-        "method": "DELETE",
-        "title": "/graphs/<graphID>",
-        "path": "/graphs/delete-graph"
-      },
-      {
         "method": "GET",
         "title": "/graphs/<graphID>",
         "path": "/graphs/get-svg"
+      },
+      {
+        "method": "PUT",
+        "title": "/graphs/<graphID>",
+        "path": "/graphs/put-graph"
+      },
+      {
+        "method": "DELETE",
+        "title": "/graphs/<graphID>",
+        "path": "/graphs/delete-graph"
       }
     ]
   }
