@@ -110,6 +110,11 @@
         "method": "PUT",
         "title": "/graphs/<graphID>",
         "path": "/pixel/put-pixel"
+      },
+      {
+        "method": "PUT",
+        "title": "/graphs/<graphID>/increment",
+        "path": "/pixel/increment-pixel"
       }
     ]
   }
