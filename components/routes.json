@@ -108,8 +108,13 @@
       },
       {
         "method": "PUT",
-        "title": "/graphs/<graphID>",
+        "title": "/graphs/<graphID>/<yyyyMMdd>",
         "path": "/pixel/put-pixel"
+      },
+      {
+        "method": "DELETE",
+        "title": "/graphs/<graphID>/<yyyyMMdd>",
+        "path": "/pixel/delete-pixel"
       },
       {
         "method": "PUT",
