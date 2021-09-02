@@ -62,7 +62,7 @@ const fetcher = async (
   return res.json();
 };
 
-export default function GetGraphDef() {
+export default function GetGraphPixels() {
   const {
     register,
     getValues,
