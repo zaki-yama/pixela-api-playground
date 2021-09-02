@@ -64,6 +64,11 @@
         "method": "DELETE",
         "title": "/graphs/<graphID>",
         "path": "/graphs/delete-graph"
+      },
+      {
+        "method": "GET",
+        "title": "/graphs/<graphID>/graph-def",
+        "path": "/graphs/get-graph-def"
       }
     ]
   }
