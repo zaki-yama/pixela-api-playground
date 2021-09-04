@@ -17,6 +17,7 @@ export default function Layout({ children }: Props) {
         <title>Pixela API Playground</title>
         <meta name="description" content="Try Pixela API on the browser!" />
         <link rel="icon" href="/favicon.ico" />
+        <meta name="og:title" content="Pixela API Playground" />
       </Head>
       <Header />
       <Box
