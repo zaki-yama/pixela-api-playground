@@ -9,7 +9,7 @@ export default function Home() {
       <div className={styles.container}>
         <Head>
           <title>Pixela API Playground</title>
-          <meta name="description" content="A playground for Pixela API" />
+          <meta name="description" content="Try Pixela API on the browser!" />
           <link rel="icon" href="/favicon.ico" />
         </Head>
       </div>
