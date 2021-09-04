@@ -1,3 +1,5 @@
+import Head from "next/head";
+
 import { Box } from "@chakra-ui/react";
 import styles from "./layout.module.css";
 
@@ -11,6 +13,11 @@ type Props = {
 export default function Layout({ children }: Props) {
   return (
     <>
+      <Head>
+        <title>Pixela API Playground</title>
+        <meta name="description" content="Try Pixela API on the browser!" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       <Header />
       <Box
         as="main"
