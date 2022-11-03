@@ -11,7 +11,7 @@ export default function Header() {
       bg="gray.200"
     >
       <Flex w="100%" h="100%" align="center" px="6">
-        <Image src="/logo.png" alt="" width="32px" height="32px" />
+        <Image src="/logo.png" alt="" width={32} height={32} />
         <Heading pl="2">Pixela API Playground</Heading>
       </Flex>
     </chakra.header>
